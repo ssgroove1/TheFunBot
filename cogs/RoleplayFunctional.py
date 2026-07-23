@@ -89,31 +89,6 @@ class RoleplayFunctional(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-        # Правильное создание Контекстных Меню для классов Cogs
-        self.ctx_hug = app_commands.ContextMenu(name="Обнять", callback=self.show_hug_user)
-        self.ctx_kiss = app_commands.ContextMenu(name="Поцеловать", callback=self.show_kiss_user)
-        self.ctx_welcome = app_commands.ContextMenu(name="Поздороваться", callback=self.show_welcome_user)
-        self.ctx_pat = app_commands.ContextMenu(name="Погладить", callback=self.show_pat_user)
-        self.ctx_slap = app_commands.ContextMenu(name="Ударить", callback=self.show_slap_user)
-        self.ctx_bite = app_commands.ContextMenu(name="Укусить", callback=self.show_bite_user)
-
-        # Регистрация меню в дереве команд бота
-        self.bot.tree.add_command(self.ctx_hug)
-        self.bot.tree.add_command(self.ctx_kiss)
-        self.bot.tree.add_command(self.ctx_welcome)
-        self.bot.tree.add_command(self.ctx_pat)
-        self.bot.tree.add_command(self.ctx_slap)
-        self.bot.tree.add_command(self.ctx_bite)
-
-    def cog_unload(self):
-        # Автоматическое удаление меню из дерева при выгрузке/перезагрузке кога
-        self.bot.tree.remove_command(self.ctx_hug.name, type=self.ctx_hug.type)
-        self.bot.tree.remove_command(self.ctx_kiss.name, type=self.ctx_kiss.type)
-        self.bot.tree.remove_command(self.ctx_welcome.name, type=self.ctx_welcome.type)
-        self.bot.tree.remove_command(self.ctx_pat.name, type=self.ctx_pat.type)
-        self.bot.tree.remove_command(self.ctx_slap.name, type=self.ctx_slap.type)
-        self.bot.tree.remove_command(self.ctx_bite.name, type=self.ctx_bite.type)
-
     # ========== КОМАНДЫ РАЗВЛЕЧЕНИЯ ==========
 
     # Вспомогательный метод для выполнения ролевых действий
@@ -422,75 +397,6 @@ class RoleplayFunctional(commands.Cog):
         
         # Передаем ссылку на сообщение во View для корректной работы таймаута
         view.message = sent_message
-    
-    # ========== КОЛБЭКИ ДЛЯ КОНТЕКСТНЫХ МЕНЮ ==========
-
-    async def show_hug_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="hug_gifs",
-            embed_title="<:hugemoji:1528331401223606322> Обнимашки!",
-            action_verb="обнимает",
-            color=discord.Color.pink(),
-            self_error="😥 Простите, вы не можете обнять самого себя!"
-        )
-
-    async def show_kiss_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="kiss_gifs",
-            embed_title="<:kissemoji:1528331667583012975> Поцелуйчики!",
-            action_verb="поцеловал(а)",
-            color=discord.Color.brand_red(),
-            self_error="😥 Простите, вы не можете поцеловать самого себя!"
-        )
-
-    async def show_welcome_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="hello_gifs",
-            embed_title="<:smilefaceemoji:1524123343370977448> Приветствие!",
-            action_verb="поздоровался(лась) с",
-            color=discord.Color.gold(),
-            self_error="😥 Простите, вы не можете поздороваться с собой!"
-        )
-
-    async def show_pat_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="pat_gifs",
-            embed_title="<:patemoji:1528331054694268938> Прижимашки!",
-            action_verb="погладил(а)",
-            color=discord.Color.purple(),
-            self_error="😥 Простите, вы не можете погладить себя!"
-        )
-
-    async def show_slap_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="slap_gifs",
-            embed_title="<:emergencyemoji:1519769135767228576> Рукоприкладство!",
-            action_verb="дал(а) леща",
-            color=discord.Color.darker_grey(),
-            self_error="😏 Вы не можете ударить себя самого!"
-        )
-
-    async def show_bite_user(self, interaction: discord.Interaction, member: discord.Member):
-        await self._execute_action(
-            interaction=interaction,
-            member=member,
-            gifs_key="bite_gifs",
-            embed_title="<:biteemoji:1528329875981734019> Укусики!",
-            action_verb="кусает",
-            color=discord.Color.darker_grey(),
-            self_error="<:bitingemoji:1528330124422811749> Вы не можете кусать себя самого!"
-        )
-
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(RoleplayFunctional(bot))
