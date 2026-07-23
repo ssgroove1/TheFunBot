@@ -50,20 +50,6 @@ async def on_ready():
     print(f"• Members (Участники сервера): {bot.intents.members}")
     print("=========================================")
     await bot.change_presence(activity=discord.CustomActivity(name="Отвечаю за актив 🍀"))
-
-async def load_extensions():
-    # Проходим по всем файлам в папке cogs
-    cogs_dir = BASE_DIR / "cogs"
-    for filename in os.listdir(cogs_dir):
-        # Загружаем только файлы с расширением .py
-        if filename.endswith('.py'):
-            cog_name = f'cogs.{filename[:-3]}'
-            try:
-                await bot.load_extension(cog_name)
-                print(f"✅ Модуль {cog_name} успешно загружен.")
-            except Exception as e:
-                print(f"❌ Ошибка загрузки модуля {cog_name}: {e}")
-
     if BotConfig.GUILD_ID:
         guild = discord.Object(id=BotConfig.GUILD_ID)
         
@@ -77,6 +63,19 @@ async def load_extensions():
         # Глобальная синхронизация (для продакшена, команды обновляются до 1 часа)
         synced = await bot.tree.sync()
         print(f"⚙️ [Глобальная синхронизация] Успешно загружено {len(synced)} глобальных команд.")
+
+async def load_extensions():
+    # Проходим по всем файлам в папке cogs
+    cogs_dir = BASE_DIR / "cogs"
+    for filename in os.listdir(cogs_dir):
+        # Загружаем только файлы с расширением .py
+        if filename.endswith('.py'):
+            cog_name = f'cogs.{filename[:-3]}'
+            try:
+                await bot.load_extension(cog_name)
+                print(f"✅ Модуль {cog_name} успешно загружен.")
+            except Exception as e:
+                print(f"❌ Ошибка загрузки модуля {cog_name}: {e}")
 
 # Запуск бота (с учетом асинхронности в d.py 2.0+)
 async def main():
