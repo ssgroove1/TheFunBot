@@ -1,18 +1,17 @@
 import os
 from pathlib import Path
 from discord import app_commands
-from datetime import datetime, timezone
 
 BASE_DIR = Path(__file__).parent
 
 class BotConfig:
     # =============== CHANNELS ===============
     CHANNELS = {
-        'commands': 1529395257140183084,
+        'commands': 1468672520717865053,
         'mod_commands': 1526631623876022332,
-        'radio': 1522690754365882538,
+        'radio': 1519803349711454298,
         'welcome': 1417900621155274762,
-        'count': 1529395257500897341,
+        'count': 1513576705896222861,
         'mod_logs': 1526548916084936831,
         'mod_logs_commands': 1526548916084936830,
         'warning_logs': 1526553007028830349,
@@ -31,7 +30,7 @@ class BotConfig:
     # =============== ROLES ===============
     ROLES = {
         'muted': 1512893252141973558,
-        'count_bad': 1529395255227715670,
+        'count_bad': 1513493354208301166,
         'first_warn': 1512794784216121344,
         'second_warn': 1512794946556530930,
         'third_warn': 1512794981138563072,
@@ -43,7 +42,7 @@ class BotConfig:
     DB_PATH = str(BASE_DIR / "database" / "fg_db.db")
     
     # =============== VARIABLES ===============
-    GUILD_ID = 1529395255127048313
+    GUILD_ID = 1417892629152010281
     DEVELOPER_ID = 777122004376879115  # ⚠️ Проверьте, точно ли это ваш ID аккаунта!
     COMMAND_PREFIX = '/'
 
