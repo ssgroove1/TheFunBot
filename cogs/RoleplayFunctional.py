@@ -114,24 +114,6 @@ class RoleplayFunctional(commands.Cog):
             callback=self.show_pat_user
         )
 
-    async def cog_load(self):
-        # Регистрируем меню в дереве команд бота при загрузке Кога
-        self.bot.tree.add_command(self.hello_context_menu)
-        self.bot.tree.add_command(self.hug_context_menu)
-        self.bot.tree.add_command(self.kiss_context_menu)
-        self.bot.tree.add_command(self.slap_context_menu)
-        self.bot.tree.add_command(self.bite_context_menu)
-        self.bot.tree.add_command(self.pat_context_menu)
-
-    def cog_unload(self):
-        # Удаляем контекстные меню при выгрузке кога, чтобы избежать дублирования
-        self.bot.tree.remove_command(self.hello_context_menu.name, type=self.hello_context_menu.type)
-        self.bot.tree.remove_command(self.hug_context_menu.name, type=self.hug_context_menu.type)
-        self.bot.tree.remove_command(self.kiss_context_menu.name, type=self.kiss_context_menu.type)
-        self.bot.tree.remove_command(self.slap_context_menu.name, type=self.slap_context_menu.type)
-        self.bot.tree.remove_command(self.bite_context_menu.name, type=self.bite_context_menu.type)
-        self.bot.tree.remove_command(self.pat_context_menu.name, type=self.pat_context_menu.type)
-
     # ========== КОМАНДЫ РАЗВЛЕЧЕНИЯ ==========
 
     # Вспомогательный метод для выполнения ролевых действий
@@ -508,5 +490,15 @@ class RoleplayFunctional(commands.Cog):
             self_error="<:bitingemoji:1528330124422811749> Вы не можете кусать себя самого!"
         )
 
-async def setup(bot):
-    await bot.add_cog(RoleplayFunctional(bot))
+async def setup(bot: commands.Bot):
+    cog = RoleplayFunctional(bot)
+    
+    # Добавляем контекстные меню при регистрации кога
+    bot.tree.add_command(cog.hello_context_menu)
+    bot.tree.add_command(cog.hug_context_menu)
+    bot.tree.add_command(cog.kiss_context_menu)
+    bot.tree.add_command(cog.slap_context_menu)
+    bot.tree.add_command(cog.bite_context_menu)
+    bot.tree.add_command(cog.pat_context_menu)
+    
+    await bot.add_cog(cog)
