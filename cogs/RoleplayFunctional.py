@@ -89,31 +89,6 @@ class RoleplayFunctional(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-        self.hello_context_menu = app_commands.ContextMenu(
-            name="поздароваться с пользователем",
-            callback=self.show_welcome_user
-        )
-        self.hug_context_menu = app_commands.ContextMenu(
-            name="обнять пользоватея",
-            callback=self.show_hug_user
-        )
-        self.kiss_context_menu = app_commands.ContextMenu(
-            name="поцеловать пользователя",
-            callback=self.show_kiss_user
-        )
-        self.slap_context_menu = app_commands.ContextMenu(
-            name="ударить пользователя",
-            callback=self.show_slap_user
-        )
-        self.bite_context_menu = app_commands.ContextMenu(
-            name="укусить пользователя",
-            callback=self.show_bite_user
-        )
-        self.pat_context_menu = app_commands.ContextMenu(
-            name="погладить пользователя",
-            callback=self.show_pat_user
-        )
-
     # ========== КОМАНДЫ РАЗВЛЕЧЕНИЯ ==========
 
     # Вспомогательный метод для выполнения ролевых действий
@@ -423,8 +398,11 @@ class RoleplayFunctional(commands.Cog):
         # Передаем ссылку на сообщение во View для корректной работы таймаута
         view.message = sent_message
     
+    # ========== КОНТЕКСТНЫЕ МЕНЮ (ПКМ ПО ПОЛЬЗОВАТЕЛЮ) ==========
+
+    @app_commands.context_menu(name="Обнять")
+    @app_commands.guild_only()
     async def show_hug_user(self, interaction: discord.Interaction, member: discord.Member):
-        """Внутренний колбэк для контекстного меню информации об участнике."""
         await self._execute_action(
             interaction=interaction,
             member=member,
@@ -435,6 +413,8 @@ class RoleplayFunctional(commands.Cog):
             self_error="😥 Простите, вы не можете обнять самого себя!"
         )
 
+    @app_commands.context_menu(name="Поцеловать")
+    @app_commands.guild_only()
     async def show_kiss_user(self, interaction: discord.Interaction, member: discord.Member):
         await self._execute_action(
             interaction=interaction,
@@ -446,6 +426,8 @@ class RoleplayFunctional(commands.Cog):
             self_error="😥 Простите, вы не можете поцеловать самого себя!"
         )
 
+    @app_commands.context_menu(name="Поздороваться")
+    @app_commands.guild_only()
     async def show_welcome_user(self, interaction: discord.Interaction, member: discord.Member):
         await self._execute_action(
             interaction=interaction,
@@ -457,6 +439,8 @@ class RoleplayFunctional(commands.Cog):
             self_error="😥 Простите, вы не можете поздороваться с собой!"
         )
 
+    @app_commands.context_menu(name="Погладить")
+    @app_commands.guild_only()
     async def show_pat_user(self, interaction: discord.Interaction, member: discord.Member):
         await self._execute_action(
             interaction=interaction,
@@ -468,6 +452,8 @@ class RoleplayFunctional(commands.Cog):
             self_error="😥 Простите, вы не можете погладить себя!"
         )
 
+    @app_commands.context_menu(name="Ударить")
+    @app_commands.guild_only()
     async def show_slap_user(self, interaction: discord.Interaction, member: discord.Member):
         await self._execute_action(
             interaction=interaction,
@@ -479,6 +465,8 @@ class RoleplayFunctional(commands.Cog):
             self_error="😏 Вы не можете ударить себя самого!"
         )
 
+    @app_commands.context_menu(name="Укусить")
+    @app_commands.guild_only()
     async def show_bite_user(self, interaction: discord.Interaction, member: discord.Member):
         await self._execute_action(
             interaction=interaction,
@@ -490,15 +478,6 @@ class RoleplayFunctional(commands.Cog):
             self_error="<:bitingemoji:1528330124422811749> Вы не можете кусать себя самого!"
         )
 
+
 async def setup(bot: commands.Bot):
-    cog = RoleplayFunctional(bot)
-    
-    # Добавляем контекстные меню при регистрации кога
-    bot.tree.add_command(cog.hello_context_menu)
-    bot.tree.add_command(cog.hug_context_menu)
-    bot.tree.add_command(cog.kiss_context_menu)
-    bot.tree.add_command(cog.slap_context_menu)
-    bot.tree.add_command(cog.bite_context_menu)
-    bot.tree.add_command(cog.pat_context_menu)
-    
-    await bot.add_cog(cog)
+    await bot.add_cog(RoleplayFunctional(bot))
