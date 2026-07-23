@@ -13,10 +13,10 @@ class CountingGame(commands.Cog):
         # Храним данные о последнем успешном сообщении
         # Формат: {"message_id": int, "author": discord.Member/User, "number": int}
         self.last_valid_entry = None
-        self.basic_emoji = self.bot.get_emoji(1519738036936638474)
-        self.uncommon_emoji = self.bot.get_emoji(1528331667583012975)
-        self.rare_emoji = self.bot.get_emoji(1528326611831750789)
-        self.epic_emoji = self.bot.get_emoji(1528328548719263834)
+        self.basic_emoji = "<:confirmedemoji:1519738036936638474>"
+        self.uncommon_emoji = "<:kissemoji:1528331667583012975>"
+        self.rare_emoji = "<:flower:1528326611831750789>"
+        self.epic_emoji = "<:danceemoji:1528328548719263834>"
 
     def cog_load(self):
         """Безопасный запуск восстановления при загрузке кога."""
