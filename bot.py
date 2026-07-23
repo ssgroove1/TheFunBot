@@ -50,19 +50,6 @@ async def on_ready():
     print(f"• Members (Участники сервера): {bot.intents.members}")
     print("=========================================")
     await bot.change_presence(activity=discord.CustomActivity(name="Отвечаю за актив 🍀"))
-    if BotConfig.GUILD_ID:
-        guild = discord.Object(id=BotConfig.GUILD_ID)
-        
-        # Копируем наши глобальные команды из Когов в дерево этого сервера
-        bot.tree.copy_global_to(guild=guild)
-        
-        # Синхронизируем дерево конкретного сервера
-        synced = await bot.tree.sync(guild=guild)
-        print(f"⚙️ [Локальная синхронизация] Успешно загружено {len(synced)} команд на сервер {guild.id}.")
-    else:
-        # Глобальная синхронизация (для продакшена, команды обновляются до 1 часа)
-        synced = await bot.tree.sync()
-        print(f"⚙️ [Глобальная синхронизация] Успешно загружено {len(synced)} глобальных команд.")
 
 async def load_extensions():
     # Проходим по всем файлам в папке cogs
@@ -76,6 +63,20 @@ async def load_extensions():
                 print(f"✅ Модуль {cog_name} успешно загружен.")
             except Exception as e:
                 print(f"❌ Ошибка загрузки модуля {cog_name}: {e}")
+
+    if BotConfig.GUILD_ID:
+        guild = discord.Object(id=BotConfig.GUILD_ID)
+        
+        # Копируем наши глобальные команды из Когов в дерево этого сервера
+        bot.tree.copy_global_to(guild=guild)
+        
+        # Синхронизируем дерево конкретного сервера
+        synced = await bot.tree.sync(guild=guild)
+        print(f"⚙️ [Локальная синхронизация] Успешно загружено {len(synced)} команд на сервер {guild.id}.")
+    else:
+        # Глобальная синхронизация (для продакшена, команды обновляются до 1 часа)
+        synced = await bot.tree.sync()
+        print(f"⚙️ [Глобальная синхронизация] Успешно загружено {len(synced)} глобальных команд.")
 
 # Запуск бота (с учетом асинхронности в d.py 2.0+)
 async def main():
